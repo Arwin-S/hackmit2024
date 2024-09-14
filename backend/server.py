@@ -1,11 +1,19 @@
 import asyncio
 import websockets
+import json
+from statemachine.StateMachine import StateMachine
+proc = StateMachine()
 
 async def process_gaze_data(websocket, path):
     async for message in websocket:
         message = json.loads(message)
         x, y = message["x"], message["y"]
-        print(x, y)
+        proc.add_point(x)
+        avg_x = proc.get_moving_avg()
+        
+        
+        # print(x, y)
+        print(avg_x)
         # Here you can process the gaze data in real time
         # For example, you can parse the message and do further computations
         # response = process(message)
