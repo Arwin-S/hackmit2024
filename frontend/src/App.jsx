@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import GazeTracker from './GazeTracker';
 import './App.css';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
 
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+      <GazeTracker />
       {/* Left Sidebar */}
       <div style={{ width: '10%', backgroundColor: '#f5f5f5', padding: '10px', boxSizing: 'border-box' }}>
         {/* Add your sidebar content here */}
