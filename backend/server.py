@@ -3,7 +3,9 @@ import websockets
 
 async def process_gaze_data(websocket, path):
     async for message in websocket:
-        print(f"Received gaze data: {message}")
+        message = json.loads(message)
+        x, y = message["x"], message["y"]
+        print(x, y)
         # Here you can process the gaze data in real time
         # For example, you can parse the message and do further computations
         # response = process(message)
