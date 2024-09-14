@@ -1,0 +1,39 @@
+[
+    {
+      "id": 1,
+      "title": "Cinderella",
+      "description": "A young girl with a kind heart overcomes hardship with the help of her fairy godmother and marries the prince.",
+      "text": "Once upon a time, there was a beautiful girl named Cinderella who lived with her wicked stepmother and stepsisters. Despite their cruelty, Cinderella remained kind and gentle. With the help of her fairy godmother, she went to the royal ball, where she captivated the prince. After losing her glass slipper, the prince searched the kingdom to find her and eventually they lived happily ever after."
+    },
+    {
+      "id": 2,
+      "title": "Snow White",
+      "description": "A princess who is poisoned by a jealous queen is saved by seven dwarfs and eventually wakes from her enchanted sleep.",
+      "text": "Snow White was a beautiful princess whose jealous stepmother, the evil queen, ordered her death. Snow White escaped to the forest where she found refuge with seven dwarfs. After the queen's attempt to kill her with a poisoned apple, Snow White fell into a deep sleep. She was awakened by a prince's kiss, and they lived happily ever after."
+    },
+    {
+      "id": 3,
+      "title": "Little Red Riding Hood",
+      "description": "A young girl in a red cloak encounters a cunning wolf while visiting her grandmother, leading to a dramatic rescue.",
+      "text": "Little Red Riding Hood set out to visit her grandmother, who lived in a cottage deep in the woods. On the way, she met a wolf who tricked her into revealing her destination. The wolf arrived at the grandmother's house first and, after disguising himself, pretended to be the grandmother. Little Red Riding Hood eventually realized the wolf's trick, and a passing huntsman rescued both her and her grandmother."
+    },
+    {
+      "id": 4,
+      "title": "Rapunzel",
+      "description": "A girl with long, magical hair is locked in a tower by a wicked witch but is eventually rescued by a prince.",
+      "text": "Rapunzel, a princess with long, golden hair, was locked in a tower by a wicked witch. The witch visited her regularly, using Rapunzel's hair to climb up. One day, a prince heard Rapunzel singing and climbed the tower using her hair. He rescued her, and they escaped together, eventually living happily ever after."
+    },
+    {
+      "id": 5,
+      "title": "Jack and the Beanstalk",
+      "description": "A young boy trades his cow for magic beans, which grow into a giant beanstalk reaching to the sky where he finds treasures and giants.",
+      "text": "Jack, a poor boy, traded his cow for a handful of magic beans. The beans grew into a giant beanstalk that reached into the sky. Jack climbed the beanstalk and discovered a giant's castle where he stole treasures including a golden harp and a goose that laid golden eggs. After a series of adventures, Jack defeated the giant and lived comfortably with his mother."
+    },
+    {
+      "id": 6,
+      "title": "The Frog Prince",
+      "description": "A princess's promise to a frog leads to a magical transformation and a fairy tale romance.",
+      "text": "A princess lost her golden ball in a well and a frog offered to retrieve it in exchange for a promise of friendship. Reluctantly, she agreed, but when the frog came to the palace, she initially refused to keep her promise. Eventually, the frog turned into a handsome prince, revealing that he was cursed by a wicked witch. The two fell in love and lived happily ever after."
+    }
+  ]
+  
