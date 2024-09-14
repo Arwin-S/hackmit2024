@@ -1,0 +1,8 @@
+client:
+    npm install -g http-server
+    go to /backend
+    run command "http-server" 
+
+backend:
+    pip install websockets
+    python server.py
