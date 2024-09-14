@@ -1,0 +1,44 @@
+
+
+
+1. Data Preprocessing:
+Smoothing: Noisy data needs to be smoothed before processing. You can use techniques like:
+Moving average: Compute a rolling average over a window of points to reduce high-frequency noise.
+Low-pass filter: Apply a Butterworth or similar filter to remove noise above a certain frequency threshold.
+Savitzky-Golay filter: This is another popular smoothing filter for real-time signal processing.
+Example code for applying a moving average in Python:
+import numpy as np
+
+def moving_average(data, window_size):
+    return np.convolve(data, np.ones(window_size)/window_size, mode='valid')
+
+# Example usage:
+X_smooth = moving_average(X_data, window_size=5)
+Y_smooth = moving_average(Y_data, window_size=5)
+Example code to calculate velocity and direction:
+def calculate_velocity(X, Y, dt=1/20):  # dt = 1/20 seconds for 20 Hz
+    Vx = np.diff(X) / dt
+    Vy = np.diff(Y) / dt
+    return Vx, Vy
+
+def calculate_direction(Vx, Vy):
+    return np.arctan2(Vy, Vx)  # In radians
+
+Vx, Vy = calculate_velocity(X_smooth, Y_smooth)
+directions = calculate_direction(Vx, Vy)
+Example rule for detecting rightwards motion:
+def detect_rightwards_motion(Vx, Vy, direction_threshold=np.pi/8):  # Threshold for nearly horizontal motion
+    return (Vx > 0) & (np.abs(Vy) < Vx * np.tan(direction_threshold))
+
+rightward_motion = detect_rightwards_motion(Vx, Vy)
+Classify action
+def classify_sweeping_action(Vx, threshold=10, window_size=5):
+    is_sweeping = []
+    for i in range(len(Vx) - window_size + 1):
+        if np.all(Vx[i:i+window_size] > threshold):
+            is_sweeping.append(True)
+        else:
+            is_sweeping.append(False)
+    return np.array(is_sweeping)
+
+sweeping_action = classify_sweeping_action(Vx)
