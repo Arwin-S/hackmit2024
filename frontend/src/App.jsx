@@ -1,138 +1,137 @@
-import React, { useState, useEffect } from 'react';
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 
 function App() {
-  const [fontSize, setFontSize] = useState(16); // Default font size
-  const [selectedFairyTale, setSelectedFairyTale] = useState(null); // To hold the selected fairy tale
-  const [fairyTales, setFairyTales] = useState([]); // To hold list of fairy tales
-  const [isReading, setIsReading] = useState(true); // To track if reading is active
-  const [stats, setStats] = useState({ changes: 0, finalFontSize: fontSize }); // Track statistics
+  const [selectedFairyTale, setSelectedFairyTale] = useState({
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis labore eius recusandae deleniti sed incidunt quam, iste deserunt qui animi maiores quasi quod voluptatum unde ducimus quas. Vero totam neque dolores, quia minus voluptate vel, molestiae doloremque mollitia ducimus fuga culpa nisi ea harum tempora eaque placeat facere quidem asperiores quisquam iusto? Explicabo expedita atque, cumque iusto delectus earum reiciendis optio nesciunt quam voluptate ab, molestiae magni dicta. Praesentium deserunt porro eveniet eius, iusto nihil libero asperiores nam itaque?'
+  });
 
-  // fetch fairy tales data
-  useEffect(() => {
-    // fetch fairy tales from a JSON file or API endpoint
-    const fetchFairyTales = async () => {
-      try {
-        const response = await fetch('/fairyTales.json'); // Adjust path as needed
-        if (!response.ok) throw new Error('Network response was not ok');
-        const data = await response.json();
-        setFairyTales(data);
-      } catch (error) {
-        console.error('Error fetching fairy tales:', error);
-      }
-    };
-    fetchFairyTales();
-  }, []);
+  const [isReading, setIsReading] = useState(true);
+  const [linesHidden, setLinesHidden] = useState(0); // State to keep track of hidden lines
+  const textBoxRef = useRef(null); // Reference for scrolling
+  const mainContentRef = useRef(null);
+  const fontSize = 16; // Constant font size
+  const lineHeight = fontSize * 1.5; // Estimate line height as 1.5x font size for better readability
 
-  // handle fairy tale selection
-  const handleFairyTaleSelection = (fairyTale) => {
-    if (isReading) {
-      setSelectedFairyTale(fairyTale);
+  const textLines = selectedFairyTale.text.split('.'); // Splitting text into sentences/lines
+
+  // Hide one line at a time (moves line up)
+  const hideOneLine = () => {
+    if (linesHidden < textLines.length) {
+      setLinesHidden((prev) => prev + 1);
     }
   };
 
-  // increase font size
-  const increaseFontSize = () => {
-    if (isReading) {
-      setFontSize((prevSize) => prevSize + 2);
-      setStats((prevStats) => ({ ...prevStats, changes: prevStats.changes + 1 }));
+  // Show one line at a time (moves line down)
+  const showOneLine = () => {
+    if (linesHidden > 0) {
+      setLinesHidden((prev) => prev - 1);
     }
-  };
-
-  // decrease font size
-  const decreaseFontSize = () => {
-    if (isReading) {
-      setFontSize((prevSize) => (prevSize > 10 ? prevSize - 2 : prevSize)); // Minimum size 10px
-      setStats((prevStats) => ({ ...prevStats, changes: prevStats.changes + 1 }));
-    }
-  };
-
-  // terminate reading and show stats
-  const terminateReading = () => {
-    setIsReading(false);
-    setStats((prevStats) => ({ ...prevStats, finalFontSize: fontSize }));
   };
 
   return (
-    <>
-      <div style={{ padding: '20px' }}>
-        {/* render the selection boxes only if no fairy tale is selected */}
-        {!selectedFairyTale && isReading && (
-          <div>
-            <h2>Select a Fairy Tale:</h2>
-            {fairyTales.map((fairyTale) => (
-              <div
-                key={fairyTale.id}
-                style={{
-                  border: '1px solid black',
-                  padding: '10px',
-                  marginTop: '10px',
-                  cursor: 'pointer',
-                }}
-                onClick={() => handleFairyTaleSelection(fairyTale)}
-              >
-                <h3>{fairyTale.title}</h3>
-                <p>{fairyTale.description}</p>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* only show text box and font size toggles if a tale is selected */}
-        {selectedFairyTale && isReading && (
-          <>
-            {/* Title Box (constant) */}
-            <div
-              style={{
-                border: '1px solid black',
-                padding: '10px',
-                marginTop: '20px',
-                backgroundColor: '#f0f0f0', 
-              }}
-            >
-              <h2>{selectedFairyTale.title}</h2>
-            </div>
-
-            {/* font size buttons */}
-            <button onClick={decreaseFontSize}>-</button>
-            <button onClick={increaseFontSize}>+</button>
-
-            {/* text box */}
-            <div
-              style={{
-                border: '1px solid black',
-                padding: '10px',
-                marginTop: '20px',
-                fontSize: `${fontSize}px`,
-              }}
-            >
-              {selectedFairyTale.text} {/* Display the selected JSON text */}
-            </div>
-
-            {/* display current font size */}
-            <p>Current font size: {fontSize}px</p>
-          </>
-        )}
-
-        {/* terminate reading button */}
-        {selectedFairyTale && isReading && (
-          <button onClick={terminateReading} style={{ marginTop: '20px' }}>
-            Terminate Reading
-          </button>
-        )}
-
-        {/* Show stats if reading is terminated */}
-        {!isReading && (
-          <div style={{ marginTop: '20px' }}>
-            <h2>Statistics</h2>
-            <p>Number of changes to font size: {stats.changes}</p>
-            <p>Final font size: {stats.finalFontSize}px</p>
-          </div>
-        )}
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+      {/* Left Sidebar */}
+      <div style={{ width: '10%', backgroundColor: '#f5f5f5', padding: '10px', boxSizing: 'border-box' }}>
+        {/* Add your sidebar content here */}
       </div>
-    </>
+
+      {/* Main Content Area */}
+      <div
+        ref={mainContentRef}
+        style={{
+          width: '80%',
+          height: '100vh',
+          padding: '40px',
+          boxSizing: 'border-box',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center', // Center vertically
+          backgroundColor: '#333', // Dark background color
+          position: 'relative',
+          overflow: 'hidden',
+          color: '#fff',
+        }}
+      >
+        {/* Top Control Bar */}
+        <div style={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: '#333',
+          color: '#fff',
+          padding: '10px',
+          position: 'absolute',
+          top: 0
+        }}>
+          <div>Section 1</div>
+          <div>
+            <span>$21.00</span>
+          </div>
+          <div>
+            1/10
+          </div>
+        </div>
+
+        {/* Yellow line to indicate the current line */}
+        <div style={{
+          width: '80%',
+          borderBottom: '3px solid yellow',
+          position: 'absolute',
+          top: '50%',
+          transform: 'translateY(-50%)', // Place line in the middle of the container
+        }}></div>
+
+        {/* Content Box */}
+        <div
+          ref={textBoxRef}
+          style={{
+            fontSize: `${fontSize}px`,
+            lineHeight: `${lineHeight}px`,
+            textAlign: 'justify',
+            width: '80%',
+            backgroundColor: '#333',
+            position: 'relative',
+            color: '#fff',
+            overflow: 'hidden',
+            height: '80%', // Limit height of the text area
+            paddingTop: `${50 - linesHidden * (lineHeight / 10)}%`, // Dynamic padding to start text in the middle and move it up
+            transition: 'padding 0.5s', // Smooth transition of lines moving up
+          }}
+        >
+          {/* Loop through each line and apply style based on visibility */}
+          {textLines.map((line, index) => (
+            <div
+              key={index}
+              style={{
+                color: index < linesHidden ? 'grey' : 'white', // Grey out the "read" lines
+                opacity: index === linesHidden ? 1 : 0.7, // Make the read lines slightly transparent
+                transition: 'color 0.3s, opacity 0.3s', // Smooth transition
+              }}
+            >
+              {line}
+            </div>
+          ))}
+        </div>
+
+        {/* Hide/Show Line Buttons */}
+        <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+          <button onClick={hideOneLine} disabled={linesHidden >= textLines.length}>
+            Hide One Line
+          </button>
+          <button onClick={showOneLine} disabled={linesHidden === 0}>
+            Show One Line
+          </button>
+        </div>
+      </div>
+
+      {/* Right Sidebar */}
+      <div style={{ width: '10%', backgroundColor: '#f5f5f5', padding: '10px', boxSizing: 'border-box' }}>
+        {/* Add your right sidebar content here */}
+      </div>
+    </div>
   );
 }
 
