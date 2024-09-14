@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGazer with WebSocket</title>
+    <script src="WebGazer/dist/webgazer.js"></script>
+</head>
+<body>
+    <script>
+        // Establish a WebSocket connection to the Python server
+        const socket = new WebSocket('ws://localhost:6789');
+
+        socket.onopen = function() {
+            console.log('WebSocket connection opened');
+        };
+
+        socket.onmessage = function(event) {
+            console.log('Server response:', event.data);
+        };
+
+        window.onload = function() {
+            webgazer.setRegression('ridge')
+                .setGazeListener(function(data, clock) {
+                    if (data) {
+                        const gazeData = JSON.stringify({ x: data.x, y: data.y });
+                        console.log('Sending gaze data:', gazeData);
+                        socket.send(gazeData);  // Send gaze data to Python server
+                    }
+                }).begin();
+        };
+    </script>
+</body>
+</html>
