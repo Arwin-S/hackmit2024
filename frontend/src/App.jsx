@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import GazeTracker from './GazeTracker';
 import './App.css';
 import { Modal, Box, Typography, Button } from '@mui/material';
+import demo_text from './assets/demo_text.json'
 
 function App() {
   const [selectedFairyTale, setSelectedFairyTale] = useState({
-    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis labore eius recusandae deleniti sed incidunt quam, iste deserunt qui animi maiores quasi quod voluptatum unde ducimus quas. Vero totam neque dolores, quia minus voluptate vel, molestiae doloremque mollitia ducimus fuga culpa nisi ea harum tempora eaque placeat facere quidem asperiores quisquam iusto? Explicabo expedita atque, cumque iusto delectus earum reiciendis optio nesciunt quam voluptate ab, molestiae magni dicta. Praesentium deserunt porro eveniet eius, iusto nihil libero asperiores nam itaque?'
+    text: demo_text.text
   });
 
   const [isReading, setIsReading] = useState(true);
@@ -15,7 +16,7 @@ function App() {
   const mainContentRef = useRef(null);
   const fontSize = 16; // Constant font size
   const lineHeight = fontSize * 1.5; // Estimate line height as 1.5x font size for better readability
-  const charsPerLine = 120; // Define how many characters should be in each line
+  const charsPerLine = 180; // Define how many characters should be in each line
 
   // Handle modal open/close
   const handleOpen = () => setOpen(true);
@@ -33,12 +34,20 @@ function App() {
     return chunks;
   };
 
+  const read_text = demo_text.text.split('\n').map((line, index) => (
+    <React.Fragment key={index}>
+      {line}
+      <br />
+    </React.Fragment>
+  ));
   // Split the text into chunks (lines) based on character count
-  const textLines = splitTextIntoChunks(selectedFairyTale.text, charsPerLine);
+  // const textLines = splitTextIntoChunks(selectedFairyTale.text, charsPerLine);
 
   // Hide one line at a time (moves line up)
   const hideOneLine = () => {
-    if (linesHidden < textLines.length) {
+    if (textBoxRef.current) {
+      const scrollAmount = lineHeight; // Scroll by the estimated line height
+      textBoxRef.current.scrollBy({ top: scrollAmount, behavior: 'smooth' });
       setLinesHidden((prev) => prev + 1);
     }
   };
@@ -121,7 +130,7 @@ function App() {
       <div className='row ps-5 pe-5 pb-5'>
         <div className='row pt-2'>
           <div className='col-3'>      <GazeTracker onLinesRead={onLinesRead} /> {/* Pass the callback here */}        </div>
-          <nav className="col-9 navbar navbar-expand-lg bg-body-tertiary">
+          <nav className="col-9 navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
             <div className="container-fluid">
               <a className="navbar-brand" href="#">Navbar</a>
               <button
@@ -178,34 +187,23 @@ function App() {
           </nav>
         </div>
 
-        <div className='row'>
-          <div className='border border-primary'
+        <div className='row ps-0 pe-0 pb-5'>
+          <div className='col-2'></div>
+          <div className=' col-10'
             ref={mainContentRef}
             style={{
-              // width: '100vw',
+              width: '70vw',
               height: '100vh',
-              // padding: '0px',
               boxSizing: 'border-box',
               display: 'flex',
-              // flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center', // Center vertically
+              justifyContent: 'center', // Horizontally center
+              alignItems: 'center', // Vertically center
               backgroundColor: '#333', // Dark background color
               overflow: 'hidden',
               color: '#fff',
+              position: 'relative'
             }}
           >
-
-            {/* Yellow line to indicate the current line */}
-            <div style={{
-              width: '80%',
-              borderBottom: '3px solid yellow',
-              position: 'absolute',
-              top: '50%',
-              transform: 'translateY(-50%)', // Place line in the middle of the container,
-              zIndex: 1
-            }}></div>
-
             {/* Content Box */}
             <div
               ref={textBoxRef}
@@ -215,33 +213,20 @@ function App() {
                 textAlign: 'justify',
                 width: '100%',
                 backgroundColor: '#333',
-                position: 'relative',
                 color: '#fff',
-                overflow: 'hidden',
-                height: '80%', // Limit height of the text area
-                paddingTop: `${20 - linesHidden * (lineHeight / 6.5)}%`, // Dynamic padding to start text in the middle and move it up
-                transition: 'padding 0.5s', // Smooth transition of lines moving up
+                overflowY: 'scroll', // Add Y-axis scroll if needed
+                maxHeight: '90%',  // Ensure the height does not overflow the parent
+                padding: '20px', // Padding around the content                
+                scrollbarWidth: 'none', // For Firefox
               }}
             >
-              {/* Loop through each line and apply style based on visibility */}
-              {textLines.map((line, index) => (
-                <div
-                  key={index}
-                  style={{
-                    color: index < linesHidden ? 'grey' : 'white', // Grey out the "read" lines
-                    opacity: index === linesHidden ? 1 : 0.7, // Make the read lines slightly transparent
-                    transition: 'color 0.3s, opacity 0.3s', // Smooth transition
-                  }}
-                >
-                  {line}
-                </div>
-              ))}
-
+              {read_text}
             </div>
           </div>
 
+          </div>
+
         </div>
-      </div>
     </div>
   );
 }
