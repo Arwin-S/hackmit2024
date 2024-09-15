@@ -11,18 +11,19 @@ function App() {
 
   const [isReading, setIsReading] = useState(true);
   const [linesHidden, setLinesHidden] = useState(0); // State to keep track of hidden lines
-  const [open, setOpen] = useState(true); // Modal open state, defaults to true on page load
+  let [open, setOpen] = useState(true); // Modal open state, defaults to true on page load
   const textBoxRef = useRef(null); // Reference for scrolling
   const mainContentRef = useRef(null);
   const fontSize = 16; // Constant font size
   const lineHeight = fontSize * 1.5; // Estimate line height as 1.5x font size for better readability
-  const charsPerLine = 180; // Define how many characters should be in each line
-
+  const charsPerLine = 120; // Define how many characters should be in each line
+  
   // Handle modal open/close
   const handleOpen = () => setOpen(true);
   const handleClose = (event, reason) => {
     if (reason === 'backdropClick') return; // Prevent closing on backdrop click
     setOpen(false);
+    open = false;
   };
 
   // Helper function to split text into chunks of fixed character length
@@ -61,7 +62,7 @@ function App() {
 
   // Callback function that will be triggered when 'lines_read' is received
   const onLinesRead = (linesRead) => {
-    hideOneLine();
+    if(open !== true) hideOneLine();
   };
 
   return (
@@ -92,9 +93,10 @@ function App() {
       {/* Modal to display instructions */}
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose= {handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        
       >
 
         <Box
@@ -123,8 +125,7 @@ function App() {
           </Button>
 
         </Box>
-
-
+          
       </Modal>
 
       <div className='row ps-5 pe-5 pb-5'>
