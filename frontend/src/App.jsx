@@ -14,8 +14,8 @@ function App() {
   let [open, setOpen] = useState(true); // Modal open state, defaults to true on page load
   const textBoxRef = useRef(null); // Reference for scrolling
   const mainContentRef = useRef(null);
-  const fontSize = 16; // Constant font size
-  const lineHeight = fontSize * 1.5; // Estimate line height as 1.5x font size for better readability
+  const fontSize = 20; // Constant font size
+  const lineHeight = fontSize * 2.5; // Estimate line height as 1.5x font size for better readability
   const charsPerLine = 120; // Define how many characters should be in each line
   
   // Handle modal open/close
@@ -81,7 +81,7 @@ function App() {
             }}
           >
             {/* Top-left corner */}
-            <div style={{ position: 'absolute', top: '50%', left: '2%', width: '20px', height: '20px', backgroundColor: 'red', borderRadius: '50%' }}></div>
+            <div style={{zIndex:1, position: 'absolute', top: '50%', left: '2%', width: '20px', height: '20px', backgroundColor: 'red', borderRadius: '50%' }}></div>
 
             {/* Top-right corner */}
             <div >
@@ -128,10 +128,11 @@ function App() {
           
       </Modal>
 
-      <div className='row ps-5 pe-5 pb-5'>
-        <div className='row pt-2'>
-          <div className='col-3'>      <GazeTracker onLinesRead={onLinesRead} /> {/* Pass the callback here */}        </div>
-          <nav className="col-9 navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+      <div className='row ps-5 pe-5 '>
+        <div className='row  mb-5' > 
+          <div className='col-3 pt-0' >      
+            <GazeTracker onLinesRead={onLinesRead} /> {/* Pass the callback here */}        </div>
+          <nav style={{ marginBottom: '60px' }}className="col-9 mt-5 navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
             <div className="container-fluid">
               <a className="navbar-brand" href="#">Navbar</a>
               <button
@@ -188,12 +189,12 @@ function App() {
           </nav>
         </div>
 
-        <div className='row ps-0 pe-0 pb-5'>
-          <div className='col-2'></div>
-          <div className=' col-10'
+        <div className='row pb-5'>
+  
+          <div className=' col-12'
             ref={mainContentRef}
             style={{
-              width: '70vw',
+              width: '90vw',
               height: '100vh',
               boxSizing: 'border-box',
               display: 'flex',
