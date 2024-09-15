@@ -95,9 +95,14 @@ const GazeTracker = ({ onLinesRead }) => { // Add destructuring here
                 const gazeData = JSON.stringify({ x: data.x, y: data.y });
                 console.log('Sending gaze data:', gazeData);
                 socket.send(gazeData); // Send gaze data to Python server
+
+                
               }
             })
             .begin();
+
+           
+
         } else {
           console.error('WebGazer failed to load');
         }
