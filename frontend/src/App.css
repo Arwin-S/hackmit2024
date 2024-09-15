@@ -45,3 +45,45 @@
 
 /* Background photo */
 
+<<<<<<< HEAD
+=======
+
+
+.container {
+  padding: 20px;
+}
+
+.fairyTaleBox {
+  border: 1px solid black;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  background-color: #fff; /* Adjust if needed */
+  transition: transform 0.2s;
+}
+
+.fairyTaleBox:hover {
+  transform: scale(1.05);
+}
+
+.fairyTaleGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.textBox {
+  border: 1px solid black;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 8px;
+  background-color: #fff; /* Adjust if needed */
+}
+
+button {
+  margin: 5px;
+}
+
+>>>>>>> 91f9182c3ca44851de73e6375122e22437b9382d

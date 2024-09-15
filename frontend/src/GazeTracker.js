@@ -55,7 +55,7 @@
 
 import React, { useEffect } from 'react';
 
-const GazeTracker = () => {
+const GazeTracker = ({ onLinesRead }) => { // Add destructuring here
   useEffect(() => {
     // Check if the script is already added
     if (!document.querySelector('script[src="../webgazer_new/dist/webgazer.js"]')) {
@@ -76,7 +76,15 @@ const GazeTracker = () => {
           };
 
           socket.onmessage = (event) => {
-            console.log('Server response:', event.data);
+            try {
+              const data = JSON.parse(event.data);
+              console.log(data);
+              if (data.lines_read !== undefined) {
+                onLinesRead(data.lines_read); // Pass the integer to the parent via callback
+              }
+            } catch (error) {
+              console.error('Error parsing JSON from server:', error);
+            }
           };
 
           // Initialize WebGazer
@@ -87,9 +95,14 @@ const GazeTracker = () => {
                 const gazeData = JSON.stringify({ x: data.x, y: data.y });
                 console.log('Sending gaze data:', gazeData);
                 socket.send(gazeData); // Send gaze data to Python server
+
+                
               }
             })
             .begin();
+
+           
+
         } else {
           console.error('WebGazer failed to load');
         }
