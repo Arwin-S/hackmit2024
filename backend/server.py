@@ -4,8 +4,10 @@ import json
 from statemachine.StateMachine import StateMachine
 
 proc = StateMachine(left_boundary=400, right_boundary=1200)
+lines_read = proc.lines_read
 
 async def process_gaze_data(websocket, path):
+    
     async for message in websocket:
         message = json.loads(message)
         x, y = message["x"], message["y"]
@@ -22,7 +24,11 @@ async def process_gaze_data(websocket, path):
         # Here you can process the gaze data in real time
         # For example, you can parse the message and do further computations
         # response = process(message)
-        # await websocket.send(response)
+        global lines_read
+        if proc.lines_read > lines_read:
+            lines_read = proc.lines_read
+            await websocket.send(json.dumps({"lines_read" : lines_read}))
+            
 # Start the WebSocket server
 start_server = websockets.serve(process_gaze_data, "localhost", 6789)
 

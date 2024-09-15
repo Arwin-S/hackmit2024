@@ -42,9 +42,14 @@ function App() {
     }
   };
 
+  // Callback function that will be triggered when 'lines_read' is received
+  const onLinesRead = (linesRead) => {
+    hideOneLine();
+  };
+
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
-      <GazeTracker />
+      <GazeTracker onLinesRead={onLinesRead} /> {/* Pass the callback here */}
       {/* Left Sidebar */}
       <div style={{ width: '10%', backgroundColor: '#f5f5f5', padding: '10px', boxSizing: 'border-box' }}>
         {/* Add your sidebar content here */}
