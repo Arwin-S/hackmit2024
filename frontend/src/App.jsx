@@ -12,17 +12,29 @@ function App() {
   const mainContentRef = useRef(null);
   const fontSize = 16; // Constant font size
   const lineHeight = fontSize * 1.5; // Estimate line height as 1.5x font size for better readability
+  const charsPerLine = 120; // Define how many characters should be in each line
 
-  const textLines = selectedFairyTale.text.split('.'); // Splitting text into sentences/lines
+  // Helper function to split text into chunks of fixed character length
+  const splitTextIntoChunks = (text, chunkSize) => {
+    const chunks = [];
+    for (let i = 0; i < text.length; i += chunkSize) {
+      chunks.push(text.slice(i, i + chunkSize));
+    }
+    return chunks;
+  };
 
-  // Hide one line at a time (moves line up)
+  // Split the text into chunks (lines) based on character count
+  const textLines = splitTextIntoChunks(selectedFairyTale.text, charsPerLine);
+
+
+  // hide one line at a time (moves line up)
   const hideOneLine = () => {
     if (linesHidden < textLines.length) {
       setLinesHidden((prev) => prev + 1);
     }
   };
 
-  // Show one line at a time (moves line down)
+  // show one line at a time (moves line down)
   const showOneLine = () => {
     if (linesHidden > 0) {
       setLinesHidden((prev) => prev - 1);
@@ -31,25 +43,21 @@ function App() {
 
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
-      {/* Left Sidebar */}
-      <div style={{ width: '10%', backgroundColor: '#f5f5f5', padding: '10px', boxSizing: 'border-box' }}>
-        {/* Add your sidebar content here */}
-      </div>
+     
 
       {/* Main Content Area */}
       <div
         ref={mainContentRef}
         style={{
-          width: '80%',
+          width: '100vw',
           height: '100vh',
-          padding: '40px',
+          padding: '0px',
           boxSizing: 'border-box',
           display: 'flex',
-          flexDirection: 'column',
+          // flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center', // Center vertically
           backgroundColor: '#333', // Dark background color
-          position: 'relative',
           overflow: 'hidden',
           color: '#fff',
         }}
@@ -81,7 +89,8 @@ function App() {
           borderBottom: '3px solid yellow',
           position: 'absolute',
           top: '50%',
-          transform: 'translateY(-50%)', // Place line in the middle of the container
+          transform: 'translateY(-50%)', // Place line in the middle of the container,
+          zIndex:1
         }}></div>
 
         {/* Content Box */}
@@ -91,13 +100,13 @@ function App() {
             fontSize: `${fontSize}px`,
             lineHeight: `${lineHeight}px`,
             textAlign: 'justify',
-            width: '80%',
+            width: '100%',
             backgroundColor: '#333',
             position: 'relative',
             color: '#fff',
             overflow: 'hidden',
             height: '80%', // Limit height of the text area
-            paddingTop: `${50 - linesHidden * (lineHeight / 10)}%`, // Dynamic padding to start text in the middle and move it up
+            paddingTop: `${50 - linesHidden * (lineHeight / 6.5)}%`, // Dynamic padding to start text in the middle and move it up
             transition: 'padding 0.5s', // Smooth transition of lines moving up
           }}
         >
@@ -127,10 +136,7 @@ function App() {
         </div>
       </div>
 
-      {/* Right Sidebar */}
-      <div style={{ width: '10%', backgroundColor: '#f5f5f5', padding: '10px', boxSizing: 'border-box' }}>
-        {/* Add your right sidebar content here */}
-      </div>
+      
     </div>
   );
 }
