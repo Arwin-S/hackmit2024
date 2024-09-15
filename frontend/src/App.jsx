@@ -126,8 +126,7 @@ function App() {
             Welcome to the Reading App!
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            This app tracks your reading progress using eye movement. Please ensure your camera is enabled and click on the <b>two red dots</b> while looking at the cursor to calibrate.
-          </Typography>
+            This app tracks your reading using eye movement. Please enable your camera, wait 5 seconds, then align your face with the box in the top left then click each <b>red dot</b> at least 3 times while looking at the cursor for better calibration.          </Typography>
           <Button onClick={handleClose} style={{ marginTop: '20px' }} variant="contained" color="primary">
             Got it!
           </Button>
