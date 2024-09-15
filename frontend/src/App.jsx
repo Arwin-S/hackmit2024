@@ -43,106 +43,131 @@ function App() {
   };
 
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
-      <GazeTracker />
-      {/* Left Sidebar */}
-      <div style={{ width: '10%', backgroundColor: '#f5f5f5', padding: '10px', boxSizing: 'border-box' }}>
-        {/* Add your sidebar content here */}
+    <div className='row ps-5 pe-5 pb-5'>
+      <div className='row pt-2'>
+        <div className='col-3'><GazeTracker /></div>
+        <nav className="col-9 navbar navbar-expand-lg bg-body-tertiary">
+          <div className="container-fluid">
+            <a className="navbar-brand" href="#">Navbar</a>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                <li className="nav-item">
+                  <a className="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#">Link</a>
+                </li>
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Dropdown
+                  </a>
+                  <ul className="dropdown-menu">
+                    <li><a className="dropdown-item" href="#">Action</a></li>
+                    <li><a className="dropdown-item" href="#">Another action</a></li>
+                    <li><hr className="dropdown-divider" /></li>
+                    <li><a className="dropdown-item" href="#">Something else here</a></li>
+                  </ul>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link disabled" aria-disabled="true">Disabled</a>
+                </li>
+              </ul>
+              <form className="d-flex" role="search">
+                <input
+                  className="form-control me-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <button className="btn btn-outline-success" type="submit">Search</button>
+              </form>
+            </div>
+          </div>
+        </nav>
       </div>
 
-      {/* Main Content Area */}
-      <div
-        ref={mainContentRef}
-        style={{
-          width: '100vw',
-          height: '100vh',
-          padding: '0px',
-          boxSizing: 'border-box',
-          display: 'flex',
-          // flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center', // Center vertically
-          backgroundColor: '#333', // Dark background color
-          overflow: 'hidden',
-          color: '#fff',
-        }}
-      >
-        {/* Top Control Bar */}
-        <div style={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          backgroundColor: '#333',
-          color: '#fff',
-          padding: '10px',
-          position: 'absolute',
-          top: 0
-        }}>
-          <div>Section 1</div>
-          <div>
-            <span>$21.00</span>
-          </div>
-          <div>
-            1/10
-          </div>
-        </div>
-
-        {/* Yellow line to indicate the current line */}
-        <div style={{
-          width: '80%',
-          borderBottom: '3px solid yellow',
-          position: 'absolute',
-          top: '50%',
-          transform: 'translateY(-50%)', // Place line in the middle of the container,
-          zIndex:1
-        }}></div>
-
-        {/* Content Box */}
-        <div
-          ref={textBoxRef}
+      <div className='row'>
+        <div className='border border-primary'
+          ref={mainContentRef}
           style={{
-            fontSize: `${fontSize}px`,
-            lineHeight: `${lineHeight}px`,
-            textAlign: 'justify',
-            width: '100%',
-            backgroundColor: '#333',
-            position: 'relative',
-            color: '#fff',
+            // width: '100vw',
+            height: '100vh',
+            // padding: '0px',
+            boxSizing: 'border-box',
+            display: 'flex',
+            // flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center', // Center vertically
+            backgroundColor: '#333', // Dark background color
             overflow: 'hidden',
-            height: '80%', // Limit height of the text area
-            paddingTop: `${50 - linesHidden * (lineHeight / 6.5)}%`, // Dynamic padding to start text in the middle and move it up
-            transition: 'padding 0.5s', // Smooth transition of lines moving up
+            color: '#fff',
           }}
         >
-          {/* Loop through each line and apply style based on visibility */}
-          {textLines.map((line, index) => (
-            <div
-              key={index}
-              style={{
-                color: index < linesHidden ? 'grey' : 'white', // Grey out the "read" lines
-                opacity: index === linesHidden ? 1 : 0.7, // Make the read lines slightly transparent
-                transition: 'color 0.3s, opacity 0.3s', // Smooth transition
-              }}
-            >
-              {line}
-            </div>
-          ))}
+
+          {/* Yellow line to indicate the current line */}
+          <div style={{
+            width: '80%',
+            borderBottom: '3px solid yellow',
+            position: 'absolute',
+            top: '50%',
+            transform: 'translateY(-50%)', // Place line in the middle of the container,
+            zIndex: 1
+          }}></div>
+
+          {/* Content Box */}
+          <div
+            ref={textBoxRef}
+            style={{
+              fontSize: `${fontSize}px`,
+              lineHeight: `${lineHeight}px`,
+              textAlign: 'justify',
+              width: '100%',
+              backgroundColor: '#333',
+              position: 'relative',
+              color: '#fff',
+              overflow: 'hidden',
+              height: '80%', // Limit height of the text area
+              paddingTop: `${20 - linesHidden * (lineHeight / 6.5)}%`, // Dynamic padding to start text in the middle and move it up
+              transition: 'padding 0.5s', // Smooth transition of lines moving up
+            }}
+          >
+            {/* Loop through each line and apply style based on visibility */}
+            {textLines.map((line, index) => (
+              <div
+                key={index}
+                style={{
+                  color: index < linesHidden ? 'grey' : 'white', // Grey out the "read" lines
+                  opacity: index === linesHidden ? 1 : 0.7, // Make the read lines slightly transparent
+                  transition: 'color 0.3s, opacity 0.3s', // Smooth transition
+                }}
+              >
+                {line}
+              </div>
+            ))}
+            
+          </div>
         </div>
 
-        {/* Hide/Show Line Buttons */}
-        <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-          <button onClick={hideOneLine} disabled={linesHidden >= textLines.length}>
-            Hide One Line
-          </button>
-          <button onClick={showOneLine} disabled={linesHidden === 0}>
-            Show One Line
-          </button>
-        </div>
       </div>
-
-      
     </div>
+
   );
 }
 
