@@ -123,7 +123,7 @@ function App() {
         >
 
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Welcome to the Reading App!
+            Welcome to ReadCoin!
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             This app tracks your reading using eye movement. Please enable your camera, wait 5 seconds, then align your face with the box in the top left then click each <b>red dot</b> at least 3 times while looking at the cursor for better calibration.          </Typography>
