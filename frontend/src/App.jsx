@@ -3,6 +3,8 @@ import GazeTracker from './GazeTracker';
 import './App.css';
 import { Modal, Box, Typography, Button } from '@mui/material';
 import demo_text from './assets/demo_text.json'
+import coinIcon from './assets/coin.webp'; // Path to your coin icon
+
 
 function App() {
   const [selectedFairyTale, setSelectedFairyTale] = useState({
@@ -17,7 +19,9 @@ function App() {
   const fontSize = 16; // Constant font size
   const lineHeight = fontSize * 1.5; // Estimate line height as 1.5x font size for better readability
   const charsPerLine = 120; // Define how many characters should be in each line
-  
+
+  const [coins, setCoins] = useState(0); // Initialize coins with 0
+
   // Handle modal open/close
   const handleOpen = () => setOpen(true);
   const handleClose = (event, reason) => {
@@ -62,9 +66,13 @@ function App() {
 
   // Callback function that will be triggered when 'lines_read' is received
   const onLinesRead = (linesRead) => {
-    if(open !== true) hideOneLine();
+    if (open !== true) {
+      setCoins((prevCoins) => prevCoins + 1); // Update the state
+      hideOneLine();
+      console.log(coins);
+    }
   };
-
+  
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
 
@@ -93,10 +101,10 @@ function App() {
       {/* Modal to display instructions */}
       <Modal
         open={open}
-        onClose= {handleClose}
+        onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        
+
       >
 
         <Box
@@ -125,7 +133,7 @@ function App() {
           </Button>
 
         </Box>
-          
+
       </Modal>
 
       <div className='row ps-5 pe-5 pb-5'>
@@ -133,7 +141,18 @@ function App() {
           <div className='col-3'>      <GazeTracker onLinesRead={onLinesRead} /> {/* Pass the callback here */}        </div>
           <nav className="col-9 navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
             <div className="container-fluid">
-              <a className="navbar-brand" href="#">Navbar</a>
+              <img
+                src={coinIcon}
+                alt="Coin Icon"
+                style={{ width: '20px', height: '20px', marginRight: '10px' }}
+              />
+              <a className="navbar-brand" href="#">ReadCoins Earned:</a>
+              <div
+                style={{color: 'white'}
+
+                }>
+                {coins}
+              </div>
               <button
                 className="navbar-toggler"
                 type="button"
@@ -148,10 +167,10 @@ function App() {
               <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                   <li className="nav-item">
-                    <a className="nav-link active" aria-current="page" href="#">Home</a>
+                    {/* <a className="nav-link active" aria-current="page" href="#">Home</a> */}
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">Link</a>
+                    {/* <a className="nav-link" href="#">Link</a> */}
                   </li>
                   <li className="nav-item dropdown">
                     <a
@@ -161,27 +180,27 @@ function App() {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      Dropdown
+                      {/* Dropdown */}
                     </a>
-                    <ul className="dropdown-menu">
-                      <li><a className="dropdown-item" href="#">Action</a></li>
-                      <li><a className="dropdown-item" href="#">Another action</a></li>
-                      <li><hr className="dropdown-divider" /></li>
-                      <li><a className="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                    {/* <ul className="dropdown-menu"> */}
+                    {/* <li><a className="dropdown-item" href="#">Action</a></li> */}
+                    {/* <li><a className="dropdown-item" href="#">Another action</a></li> */}
+                    {/* <li><hr className="dropdown-divider" /></li> */}
+                    {/* <li><a className="dropdown-item" href="#">Something else here</a></li> */}
+                    {/* </ul> */}
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link disabled" aria-disabled="true">Disabled</a>
+                    {/* <a className="nav-link disabled" aria-disabled="true">Disabled</a> */}
                   </li>
                 </ul>
                 <form className="d-flex" role="search">
                   <input
                     className="form-control me-2"
                     type="search"
-                    placeholder="Search"
+                    placeholder="Search (coming soon...)"
                     aria-label="Search"
                   />
-                  <button className="btn btn-outline-success" type="submit">Search</button>
+                  {/* <button className="btn btn-outline-success" type="submit">Search</button> */}
                 </form>
               </div>
             </div>
@@ -225,9 +244,9 @@ function App() {
             </div>
           </div>
 
-          </div>
-
         </div>
+
+      </div>
     </div>
   );
 }
